@@ -74,7 +74,7 @@ namespace RelationsNaN.Migrations
                     b.ToTable("Game");
                 });
 
-            modelBuilder.Entity("RelationsNaN.Models.GamePurchase", b =>
+            modelBuilder.Entity("RelationsNaN.Models.GamePurchaseV1", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,31 @@ namespace RelationsNaN.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("GamePurchase");
+                    b.ToTable("GamePurchaseV1");
+                });
+
+            modelBuilder.Entity("RelationsNaN.Models.GamePurchaseV2", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("GamePurchaseV2");
                 });
 
             modelBuilder.Entity("BundleGame", b =>
@@ -110,10 +134,19 @@ namespace RelationsNaN.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RelationsNaN.Models.GamePurchase", b =>
+            modelBuilder.Entity("RelationsNaN.Models.GamePurchaseV1", b =>
                 {
                     b.HasOne("RelationsNaN.Models.Game", null)
-                        .WithMany("GamePurchases")
+                        .WithMany("GamePurchasesV1")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RelationsNaN.Models.GamePurchaseV2", b =>
+                {
+                    b.HasOne("RelationsNaN.Models.Game", null)
+                        .WithMany("GamePurchasesV2")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -121,7 +154,9 @@ namespace RelationsNaN.Migrations
 
             modelBuilder.Entity("RelationsNaN.Models.Game", b =>
                 {
-                    b.Navigation("GamePurchases");
+                    b.Navigation("GamePurchasesV1");
+
+                    b.Navigation("GamePurchasesV2");
                 });
 #pragma warning restore 612, 618
         }

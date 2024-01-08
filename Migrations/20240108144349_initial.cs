@@ -5,7 +5,7 @@
 namespace RelationsNaN.Migrations
 {
     /// <inheritdoc />
-    public partial class initiale : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,7 +62,7 @@ namespace RelationsNaN.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GamePurchase",
+                name: "GamePurchaseV1",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -72,9 +72,30 @@ namespace RelationsNaN.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GamePurchase", x => x.Id);
+                    table.PrimaryKey("PK_GamePurchaseV1", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GamePurchase_Game_GameId",
+                        name: "FK_GamePurchaseV1_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GamePurchaseV2",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    PurchaseId = table.Column<int>(type: "int", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GamePurchaseV2", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GamePurchaseV2_Game_GameId",
                         column: x => x.GameId,
                         principalTable: "Game",
                         principalColumn: "Id",
@@ -87,8 +108,13 @@ namespace RelationsNaN.Migrations
                 column: "GamesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GamePurchase_GameId",
-                table: "GamePurchase",
+                name: "IX_GamePurchaseV1_GameId",
+                table: "GamePurchaseV1",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GamePurchaseV2_GameId",
+                table: "GamePurchaseV2",
                 column: "GameId");
         }
 
@@ -99,7 +125,10 @@ namespace RelationsNaN.Migrations
                 name: "BundleGame");
 
             migrationBuilder.DropTable(
-                name: "GamePurchase");
+                name: "GamePurchaseV1");
+
+            migrationBuilder.DropTable(
+                name: "GamePurchaseV2");
 
             migrationBuilder.DropTable(
                 name: "Bundle");

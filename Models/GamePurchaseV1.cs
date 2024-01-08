@@ -1,6 +1,6 @@
 ﻿namespace RelationsNaN.Models
 {
-    public class GamePurchase
+    public class GamePurchaseV1
     {
         public int Id { get; set; }
         public int GameId { get; set; }
