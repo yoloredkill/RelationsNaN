@@ -9,6 +9,6 @@ namespace RelationsNaN.Models
         public string Image { get; set; }
         public int ReleaseYear { get; set; }
         [ValidateNever]
-        public Genre Genre { get; set; }
+        public Genre? Genre { get; set; }
     }
 }
