@@ -11,8 +11,8 @@ using RelationsNaN.Data;
 namespace RelationsNaN.Migrations
 {
     [DbContext(typeof(RelationsNaNContext))]
-    [Migration("20240120172650_initiale")]
-    partial class initiale
+    [Migration("20240120174009_relationGameGenre")]
+    partial class relationGameGenre
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace RelationsNaN.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -44,6 +47,8 @@ namespace RelationsNaN.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Game");
                 });
@@ -62,7 +67,18 @@ namespace RelationsNaN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bundle");
+                    b.ToTable("Genre");
+                });
+
+            modelBuilder.Entity("RelationsNaN.Models.Game", b =>
+                {
+                    b.HasOne("RelationsNaN.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
                 });
 #pragma warning restore 612, 618
         }
