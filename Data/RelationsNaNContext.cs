@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RelationsNaN.Models;
 
@@ -12,8 +13,15 @@ namespace RelationsNaN.Data
         public RelationsNaNContext (DbContextOptions<RelationsNaNContext> options)
             : base(options)
         {
+
         }
 
-        public DbSet<RelationsNaN.Models.Game> Game { get; set; } = default!;
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+        public DbSet<Game> Game { get; set; } = default!;
+        public DbSet<Genre> Bundle { get; set; } = default!;
     }
 }

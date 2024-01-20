@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using RelationsNaN.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<RelationsNaNContext>(options =>
@@ -24,5 +23,19 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    var scopeProvider = scope.ServiceProvider;
+    try
+    {
+        var seed = scopeProvider.GetRequiredService<DbInitializer>();
+        await seed.SeedAsync();
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, ex.Message);
+    }
+}
 
 app.Run();
