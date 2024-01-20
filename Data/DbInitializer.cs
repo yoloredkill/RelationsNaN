@@ -17,30 +17,29 @@ namespace RelationsNaN.Data
             {
                 Game game1 = new Game()
                 {
-                    Id = 1,
                     Name = "Super Smash Bros.",
                     ReleaseYear = 1999,
                     Image = "https://en.wikipedia.org/wiki/Super_Smash_Bros._(video_game)#/media/File:Supersmashbox.jpg"
                 };
-                _context.Game.Add(game1);
+                await _context.Game.AddAsync(game1);
 
                 Game game2 = new Game()
                 {
-                    Id = 2,
                     Name = "Super Smash Bros. Ultimate",
                     ReleaseYear = 2015,
                     Image = "https://en.wikipedia.org/wiki/Super_Smash_Bros._Ultimate#/media/File:Super_Smash_Bros._Ultimate.jpg"
                 };
-                _context.Game.Add(game2);
+                await _context.Game.AddAsync(game2);
 
                 Game game3 = new Game()
                 {
-                    Id = 3,
                     Name = "GoldenEye 007",
                     ReleaseYear = 1997,
                     Image = "https://en.wikipedia.org/wiki/GoldenEye_007_(1997_video_game)#/media/File:GoldenEye007box.jpg"
                 };
-                _context.Game.Add(game3);
+                await _context.Game.AddAsync(game3);
+
+                await _context.SaveChangesAsync();
             }
         }
     }

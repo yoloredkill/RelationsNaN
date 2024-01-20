@@ -7,6 +7,8 @@ builder.Services.AddDbContext<RelationsNaNContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<DbInitializer>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
