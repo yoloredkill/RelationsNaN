@@ -8,6 +8,8 @@ namespace RelationsNaN.Models
         public string Name { get; set; }
         public string Image { get; set; }
         public int ReleaseYear { get; set; }
+
+        public int? GenreId { get; set; }
         [ValidateNever]
         public Genre? Genre { get; set; }
     }

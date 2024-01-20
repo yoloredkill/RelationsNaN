@@ -48,7 +48,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Game");
+                    b.ToTable("Game", (string)null);
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Genre", b =>
@@ -65,7 +65,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genre");
+                    b.ToTable("Genre", (string)null);
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Game", b =>
