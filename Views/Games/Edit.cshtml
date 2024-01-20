@@ -10,6 +10,25 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @foreach (var platform in Model.Platforms)
+        {
+            <form asp-action="RemovePlatform" method="post">
+                <input type="hidden" name="id" value="@Model.Id"/>
+                <input type="hidden" name="platformId" value="@platform.Id" />
+                <input type="submit" class="btn btn-primary" value="@platform.Name">
+            </form>
+        }
+        <form asp-action="AddPlatform" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="Platforms" class="control-label"></label>
+                <select name="platformId" class="form-control" asp-items="ViewBag.Platforms"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Platform" class="btn btn-primary" />
+            </div>
+        </form>
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -33,9 +52,13 @@
                 <select asp-for="GenreId" class="form-control" asp-items="ViewBag.GenreId"></select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            <v class="form-group">
+                <label asp-for="Platforms" class="control-label"></label>
+                <select name="test" class="form-control" asp-items="ViewBag.Platforms"></select>
+                AddPlatform
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>

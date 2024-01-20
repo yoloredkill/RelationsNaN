@@ -22,7 +22,7 @@ namespace RelationsNaN.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-            var relationsNaNContext = _context.Game.Include(g => g.Genre);
+            var relationsNaNContext = _context.Game.Include(g => g.Genre).Include(g => g.Platforms);
             return View(await relationsNaNContext.ToListAsync());
         }
 
@@ -49,6 +49,7 @@ namespace RelationsNaN.Controllers
         public IActionResult Create()
         {
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name");
+            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View();
         }
 
@@ -66,6 +67,7 @@ namespace RelationsNaN.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
+            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View(game);
         }
 
@@ -77,14 +79,48 @@ namespace RelationsNaN.Controllers
                 return NotFound();
             }
 
-            var game = await _context.Game.FindAsync(id);
+            var game = await _context.Game.Include(g => g.Platforms).FirstOrDefaultAsync(x => x.Id == id);
             if (game == null)
             {
                 return NotFound();
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
+            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View(game);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPlatform(int id, int platformId)
+        {
+            return await EditPlatform(id, platformId, true);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemovePlatform(int id, int platformId)
+        {
+            return await EditPlatform(id, platformId, false);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPlatform(int id, int platformId, bool add)
+        {
+            var platform = _context.Platform.First(x => x.Id == platformId);
+            var game = _context.Game.Include(g => g.Platforms).First(x => x.Id == id);
+
+            if(add)
+                game.Platforms.Add(platform);
+            else
+                game.Platforms.Remove(platform);
+            await _context.SaveChangesAsync();
+
+            ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
+            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
+            return View("Edit", game);
+        }
+
 
         // POST: Games/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -119,6 +155,7 @@ namespace RelationsNaN.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
+            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
             return View(game);
         }
 
