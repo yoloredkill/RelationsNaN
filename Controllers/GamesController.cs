@@ -85,7 +85,7 @@ namespace RelationsNaN.Controllers
                 return NotFound();
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
-            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
+            ViewData["Platforms"] = new SelectList(_context.Platform.Where(x => !game.Platforms.Contains(x)), "Id", "Name");
             return View(game);
         }
 
@@ -117,7 +117,7 @@ namespace RelationsNaN.Controllers
             await _context.SaveChangesAsync();
 
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
-            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
+            ViewData["Platforms"] = new SelectList(_context.Platform.Where(x => !game.Platforms.Contains(x)), "Id", "Name");
             return View("Edit", game);
         }
 
@@ -155,7 +155,7 @@ namespace RelationsNaN.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
-            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name");
+            ViewData["Platforms"] = new SelectList(_context.Platform.Where(x => !game.Platforms.Contains(x)), "Id", "Name");
             return View(game);
         }
 
