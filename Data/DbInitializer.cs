@@ -17,25 +17,25 @@ namespace RelationsNaN.Data
             {
                 Game game1 = new Game()
                 {
-                    Name = "Super Smash Bros.",
-                    ReleaseYear = 1999,
-                    Image = "https://en.wikipedia.org/wiki/Super_Smash_Bros._(video_game)#/media/File:Supersmashbox.jpg"
+                    Name = "Dark Souls III",
+                    ReleaseYear = 2016,
+                    Image = "https://image.api.playstation.com/cdn/UP0700/CUSA03388_00/v8JlD8KcQUtTqaLBmpFnj1ESRR5zMkLk.png"
                 };
                 await _context.Game.AddAsync(game1);
 
                 Game game2 = new Game()
                 {
                     Name = "Super Smash Bros. Ultimate",
-                    ReleaseYear = 2015,
-                    Image = "https://en.wikipedia.org/wiki/Super_Smash_Bros._Ultimate#/media/File:Super_Smash_Bros._Ultimate.jpg"
+                    ReleaseYear = 2018,
+                    Image = "https://assets.nintendo.com/image/upload/c_fill,w_1200/q_auto:best/f_auto/dpr_2.0/ncom/software/switch/70010000012332/ac4d1fc9824876ce756406f0525d50c57ded4b2a666f6dfe40a6ac5c3563fad9"
                 };
                 await _context.Game.AddAsync(game2);
 
                 Game game3 = new Game()
                 {
-                    Name = "GoldenEye 007",
-                    ReleaseYear = 1997,
-                    Image = "https://en.wikipedia.org/wiki/GoldenEye_007_(1997_video_game)#/media/File:GoldenEye007box.jpg"
+                    Name = "XCom 2",
+                    ReleaseYear = 2016,
+                    Image = "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/XCOM_2_cover_art.jpg/220px-XCOM_2_cover_art.jpg"
                 };
                 await _context.Game.AddAsync(game3);
 
@@ -46,21 +46,27 @@ namespace RelationsNaN.Data
             {
                 Platform ps5 = new Platform()
                 {
-                    Name = "PS3"
+                    Name = "PS4"
                 };
                 await _context.Platform.AddAsync(ps5);
 
                 Platform xbox360 = new Platform()
                 {
-                    Name = "Xbox 360"
+                    Name = "Xbox One"
                 };
                 await _context.Platform.AddAsync(xbox360);
 
                 Platform n64 = new Platform()
                 {
-                    Name = "N64"
+                    Name = "Switch"
                 };
                 await _context.Platform.AddAsync(n64);
+
+                Platform pc = new Platform()
+                {
+                    Name = "PC"
+                };
+                await _context.Platform.AddAsync(pc);
 
                 await _context.SaveChangesAsync();
             }
