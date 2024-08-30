@@ -41,6 +41,37 @@ namespace RelationsNaN.Data
 
                 await _context.SaveChangesAsync();
             }
+
+            if (_context.Platforms.Count() == 0)
+            {
+                Platform ps5 = new Platform()
+                {
+                    Name = "PS4"
+                };
+                await _context.Platforms.AddAsync(ps5);
+
+                Platform xbox360 = new Platform()
+                {
+                    Name = "Xbox One"
+                };
+                await _context.Platforms.AddAsync(xbox360);
+
+                Platform n64 = new Platform()
+                {
+                    Name = "Switch"
+                };
+                await _context.Platforms.AddAsync(n64);
+
+                Platform pc = new Platform()
+                {
+                    Name = "PC"
+                };
+                await _context.Platforms.AddAsync(pc);
+
+                await _context.SaveChangesAsync();
+            }
         }
+
+
     }
 }
